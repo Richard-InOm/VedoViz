@@ -20,8 +20,8 @@ public class CameraMotion : MonoBehaviour
 
         float Xaxis = Input.GetAxis("MovementX");
         float Yaxis = Input.GetAxis("MovementY");
-        float Zaxis = input.GetAxis("MovementZ");
-        transform.Translate((Xaxis, Yaxis, Zaxis) * Time.deltaTime);
+        float Zaxis = Input.GetAxis("MovementZ");
+        transform.Translate(new Vector3(Xaxis, Yaxis, Zaxis) * Time.deltaTime);
         
     }
 
