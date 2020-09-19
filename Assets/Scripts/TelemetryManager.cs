@@ -49,6 +49,11 @@ public class TelemetryManager : MonoBehaviour
         outputFile.Close();
     }
 
+    public Telemetry GetTelemetry()
+    {
+        return currTelem;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,4 +73,5 @@ public class TelemetryManager : MonoBehaviour
         this.transform.position = currTelem.position;
         this.transform.rotation = Quaternion.Euler(currTelem.rotation);
     }
+
 }
