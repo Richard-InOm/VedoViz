@@ -40,12 +40,15 @@ public class UIManager : MonoBehaviour
     private void UpdateVelocityUI(int state) {
         if (state == 0) {
             stateUI.GetComponentInChildren<Text>().text = "State: Idle";
+            GetComponent<Text>().color = Color.yellow;
         }
         if (state == 1) {
             stateUI.GetComponentInChildren<Text>().text = "State: Moving";
+            GetComponent<Text>().color = Color.green;
         }
         if (state == -1) {
             stateUI.GetComponentInChildren<Text>().text = "State: Error";
+            GetComponent<Text>().color = Color.red;
         }
     }
 }
