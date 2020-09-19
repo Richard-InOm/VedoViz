@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     {
         tm = FindObjectOfType<TelemetryManager>();
         batteryUI = transform.GetChild(1);
+        velocityUI = transform.GetChild(2);
+        stateUI = transform.GetChild(3);
     }
 
     // Update is called once per frame
@@ -21,11 +23,29 @@ public class UIManager : MonoBehaviour
     {
         Telemetry telem = tm.GetTelemetry();
         UpdateBatteryUI(telem.batteryLevel);
+        UpdateVelocityUI(telem.velocity);
+        UpdateStateUI(telem.state);
     }
 
     private void UpdateBatteryUI(float batteryLevel)
     {
         batteryUI.GetComponentInChildren<Slider>().value = batteryLevel;
         batteryUI.GetComponentInChildren<Text>().text = "Battery Level: " + batteryLevel + "%";
+    }
+
+    private void UpdateVelocityUI(float velocity) {
+        velocityUI.GetComponentInChildren<Text>().text = "Velocity: " + velocity + "m/s";
+    }
+
+    private void UpdateVelocityUI(int state) {
+        if (state == 0) {
+            stateUI.GetComponentInChildren<Text>().text = "State: Idle";
+        }
+        if (state == 1) {
+            stateUI.GetComponentInChildren<Text>().text = "State: Moving";
+        }
+        if (state == -1) {
+            stateUI.GetComponentInChildren<Text>().text = "State: Error";
+        }
     }
 }
