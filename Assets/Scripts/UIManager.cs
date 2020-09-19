@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     TelemetryManager tm;
 
     private Transform batteryUI;
+    private Transform velocityUI;
+    private Transform stateUI;
 
     // Start is called before the first frame update
     void Start()
@@ -37,18 +39,19 @@ public class UIManager : MonoBehaviour
         velocityUI.GetComponentInChildren<Text>().text = "Velocity: " + velocity + "m/s";
     }
 
-    private void UpdateVelocityUI(int state) {
+    private void UpdateStateUI(int state) {
+        Text myText = stateUI.GetComponentInChildren<Text>();
         if (state == 0) {
-            stateUI.GetComponentInChildren<Text>().text = "State: Idle";
-            GetComponent<Text>().color = Color.yellow;
+            myText.text = "State: Idle";
+            myText.color = Color.yellow;
         }
         if (state == 1) {
-            stateUI.GetComponentInChildren<Text>().text = "State: Moving";
-            GetComponent<Text>().color = Color.green;
+            myText.text = "State: Moving";
+            myText.color = Color.green;
         }
         if (state == -1) {
-            stateUI.GetComponentInChildren<Text>().text = "State: Error";
-            GetComponent<Text>().color = Color.red;
+            myText.text = "State: Error";
+            myText.color = Color.red;
         }
     }
 }
