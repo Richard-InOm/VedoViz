@@ -22,10 +22,10 @@ public class CameraMotion : MonoBehaviour
         float Yaxis = Input.GetAxis("MovementY");
         float Zaxis = Input.GetAxis("MovementZ");
         transform.Translate(new Vector3(Xaxis, Yaxis, Zaxis) * Time.deltaTime);
-        rotationX *= Time.deltaTime;
-        rotationY *= Time.deltaTime;
-        rotationZ *= Time.deltaTime; 
-        transform.Rotate(rotationX, rotationY, rotationZ);
+        //rotationX *= Time.deltaTime;
+        //rotationY *= Time.deltaTime;
+        //rotationZ *= Time.deltaTime; 
+        //transform.Rotate(rotationX, rotationY, rotationZ);
         
     }
 
