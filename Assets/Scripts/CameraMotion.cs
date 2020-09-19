@@ -17,6 +17,11 @@ public class CameraMotion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        float Xaxis = Input.GetAxis("MovementX");
+        float Yaxis = Input.GetAxis("MovementY");
+        float Zaxis = input.GetAxis("MovementZ");
+        transform.Translate((Xaxis, Yaxis, Zaxis) * Time.deltaTime);
         
     }
 
