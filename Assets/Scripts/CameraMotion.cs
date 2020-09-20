@@ -6,12 +6,22 @@ public class CameraMotion : MonoBehaviour
 {
     Camera mainCam;
     TelemetryManager tm;
+    UIManager ui;
+    float moveSpeed;
+    float rotSpeed;
+    bool placingTarget;
+
+    public GameObject tooltip;
 
     // Start is called before the first frame update
     void Start()
     {
         this.mainCam = this.GetComponent<Camera>();
         tm = FindObjectOfType<TelemetryManager>();
+        ui = FindObjectOfType<UIManager>();
+        moveSpeed = 10f;
+        rotSpeed = 2f;
+        placingTarget = false;
     }
 
     // Update is called once per frame
@@ -21,19 +31,40 @@ public class CameraMotion : MonoBehaviour
         float Xaxis = Input.GetAxis("MovementX");
         float Yaxis = Input.GetAxis("MovementY");
         float Zaxis = Input.GetAxis("MovementZ");
-        transform.Translate(new Vector3(Xaxis, Yaxis, Zaxis) * Time.deltaTime);
-        //rotationX *= Time.deltaTime;
-        //rotationY *= Time.deltaTime;
-        //rotationZ *= Time.deltaTime; 
-        //transform.Rotate(rotationX, rotationY, rotationZ);
+        transform.Translate(new Vector3(Xaxis, Yaxis, Zaxis) * Time.deltaTime * moveSpeed);
+        Vector3 rotation = ui.GetRotation();
+        transform.Rotate(rotation, Space.Self);
+
+        if (placingTarget && Input.GetMouseButtonDown(0))
+        {
+            PlaceNewTarget();
+            placingTarget = false;
+            tooltip.SetActive(false);
+        }
         
+    }
+
+    public void PreparePlacingTarget()
+    {
+        placingTarget = true;
     }
 
     private void PlaceNewTarget()
     {
-        if(Physics.Raycast(this.transform.position, this.transform.forward, out RaycastHit hitInfo))
+        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out RaycastHit hitInfo))
         {
-            tm.AddTarget(hitInfo.point);
+            tm.SpawnTarget(hitInfo.point);
         }
+    }
+
+    public void CamToRover()
+    {
+        mainCam.transform.position = tm.transform.position + new Vector3(0f, 2f, 0f);
+    }
+
+    public void ResetRotation()
+    {
+        mainCam.transform.rotation = Quaternion.identity;
     }
 }

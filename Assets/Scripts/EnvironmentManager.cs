@@ -10,7 +10,7 @@ public class EnvironmentObjects
 
     [System.Serializable]
 public class EnvironmentObj
-{
+{ 
     public int type;
     public Vector3 size;
     public Vector3 position;
@@ -23,10 +23,11 @@ public class EnvironmentObj
         EnvironmentObj.possEnvObjs = envObjs;
     }
 
-    public void AddToScene()
+    public GameObject AddToScene()
     {
         GameObject envObj = GameObject.Instantiate(EnvironmentObj.possEnvObjs[this.type], this.position, Quaternion.Euler(this.rotation));
-        //envObj.transform.localScale = this.size;
+        envObj.transform.localScale = this.size;
+        return envObj;
     }
 
 }
@@ -36,23 +37,33 @@ public class EnvironmentManager : MonoBehaviour
 
     public GameObject[] envObjs;
 
+    private List<GameObject> currLoaded;
+
     // Start is called before the first frame update
     void Start()
     {
+        currLoaded = new List<GameObject>();
         EnvironmentObj.SetEnvObjs(envObjs);
+        LoadEnvironment();
+    }
 
+    public void UnloadPrevious()
+    {
+        foreach(GameObject loaded in currLoaded)
+        {
+            Destroy(loaded);
+        }
+    }
+
+    public void LoadEnvironment()
+    {
         TextAsset envJson = Resources.Load<TextAsset>("rover-ui/rover-ui/comm_files/rover_environment");
         Debug.Log(envJson.text);
         EnvironmentObjects objs = JsonUtility.FromJson<EnvironmentObjects>("{ \"environment\": " + envJson.text + " }");
         foreach (EnvironmentObj obj in objs.environment)
         {
-            obj.AddToScene();
+            GameObject loaded = obj.AddToScene();
+            currLoaded.Add(loaded);
         }
-    }
-
-    // FixedUpdate is called once per frame
-    void FixedUpdate()
-    {
-        
     }
 }
