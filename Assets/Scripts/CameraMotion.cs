@@ -20,7 +20,6 @@ public class CameraMotion : MonoBehaviour
         tm = FindObjectOfType<TelemetryManager>();
         ui = FindObjectOfType<UIManager>();
         moveSpeed = 10f;
-        rotSpeed = 2f;
         placingTarget = false;
     }
 

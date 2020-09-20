@@ -62,7 +62,6 @@ public class TelemetryManager : MonoBehaviour
         potentialTargMarks = new List<GameObject>();
         actualTargs = new List<Target>();
         targMarks = new List<GameObject>();
-        updateNow = false;
     }
 
     private void Update()
@@ -137,11 +136,15 @@ public class TelemetryManager : MonoBehaviour
 
     public void UpdatePos()
     {
-        Debug.Log("UPDATING POS");
-        Destroy(currObj);
-        Debug.Log("DESTROYED");
         Vector3 pos = new Vector3(currTelem.position.x, currTelem.position.z, currTelem.position.y);
-        currObj = GameObject.Instantiate(telemetryObj, pos, Quaternion.Euler(currTelem.rotation));
+        if (currObj == null)
+        {
+            currObj = GameObject.Instantiate(telemetryObj, pos, Quaternion.Euler(currTelem.rotation));
+        }
+        else
+        {
+            currObj.transform.SetPositionAndRotation(pos, Quaternion.Euler(currTelem.rotation));
+        }
     }
 
     public void EmergencyStop()

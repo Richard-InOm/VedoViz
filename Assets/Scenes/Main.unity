@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 45489478}
   m_Layer: 5
   m_Name: Slider
-  m_TagString: Untagged
+  m_TagString: sliderX
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 103563933}
   m_Layer: 5
   m_Name: Y_Text
-  m_TagString: Untagged
+  m_TagString: rotY
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1046,7 +1046,7 @@ GameObject:
   - component: {fileID: 261782422}
   m_Layer: 5
   m_Name: Slider (2)
-  m_TagString: Untagged
+  m_TagString: sliderZ
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1148,7 +1148,7 @@ GameObject:
   - component: {fileID: 269318157}
   m_Layer: 5
   m_Name: 'Z_Text '
-  m_TagString: Untagged
+  m_TagString: rotZ
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1284,7 +1284,7 @@ GameObject:
   - component: {fileID: 307490944}
   m_Layer: 0
   m_Name: BatteryUI
-  m_TagString: Untagged
+  m_TagString: batteryUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1718,7 +1718,7 @@ GameObject:
   - component: {fileID: 538582207}
   m_Layer: 5
   m_Name: X_Text
-  m_TagString: Untagged
+  m_TagString: rotX
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2012,7 +2012,7 @@ GameObject:
   - component: {fileID: 572681451}
   m_Layer: 0
   m_Name: StateUI
-  m_TagString: Untagged
+  m_TagString: stateUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3085,7 +3085,7 @@ GameObject:
   - component: {fileID: 1136451584}
   m_Layer: 5
   m_Name: Slider (1)
-  m_TagString: Untagged
+  m_TagString: sliderY
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3588,7 +3588,7 @@ GameObject:
   - component: {fileID: 1257542326}
   m_Layer: 0
   m_Name: VelocityUI
-  m_TagString: Untagged
+  m_TagString: velocityUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4359,7 +4359,7 @@ GameObject:
   - component: {fileID: 1561975999}
   m_Layer: 0
   m_Name: RotationUI
-  m_TagString: Untagged
+  m_TagString: rotationUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
