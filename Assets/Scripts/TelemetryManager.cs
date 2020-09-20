@@ -6,12 +6,11 @@ using UnityEngine;
 [System.Serializable]
 public class Telemetry
 {
-    public Target position;
+    public Vector3 position;
     public Vector3 rotation;
     public float batteryLevel;
     public int state;
     public float velocity;
-    //will not be ints vvvv
     public Target[] targets;
 }
 
@@ -26,38 +25,67 @@ public class Target
     {
         this.id = id;
         this.position = pos;
+        this.position = new Vector3(this.position.x, this.position.z, this.position.y);
+        this.action = act;
+    }
+}
+
+[System.Serializable]
+public class ActionJson
+{
+    public int action;
+
+    public ActionJson(int act)
+    {
         this.action = act;
     }
 }
 
 public class TelemetryManager : MonoBehaviour
 {
-
-    private Telemetry currTelem;
+    public GameObject telemetryObj;
+    public Telemetry currTelem;
     private List<Target> potentialTargs;
     private List<GameObject> potentialTargMarks;
 
     private List<Target> actualTargs;
     private List<GameObject> targMarks;
+    private GameObject currObj;
+    private bool updateNow;
 
     public GameObject targMarker;
 
     private void Start()
     {
-        UpdateRover();
+        UpdateJson();
         potentialTargs = new List<Target>();
         potentialTargMarks = new List<GameObject>();
         actualTargs = new List<Target>();
         targMarks = new List<GameObject>();
+        updateNow = false;
+    }
+
+    private void Update()
+    {
+        if (updateNow)
+        {
+            UpdatePos();
+        }
+    }
+
+    public Telemetry GetTelemetry()
+    {
+        return currTelem;
+    }
+
+    public Vector3 GetRoverPos()
+    {
+        return currObj.transform.position;
     }
 
     public void SpawnTarget(Vector3 pos)
     {
-        TextAsset telemJson = Resources.Load<TextAsset>("rover-ui/rover-ui/comm_files/rover_telemetry");
-        currTelem = JsonUtility.FromJson<Telemetry>(telemJson.text);
-        Target[] currTargs = currTelem.targets;
-
-        Target newTarg = new Target(currTargs.Length, pos, 1);
+        Target newTarg = new Target(0, pos, 1);
         GameObject targMark = GameObject.Instantiate(targMarker, pos, Quaternion.identity);
 
         potentialTargs.Add(newTarg);
@@ -96,22 +124,34 @@ public class TelemetryManager : MonoBehaviour
         }
     }
 
-    public Telemetry GetTelemetry()
-    {
-        return currTelem;
-    }
-
-    public void UpdateRover()
+    public void UpdateJson()
     {
         Debug.Log("UPDATING ROVER");
-        TextAsset telemJson = Resources.Load<TextAsset>("rover-ui/rover-ui/comm_files/rover_telemetry");
-        Debug.Log("LOADED");
-        currTelem = JsonUtility.FromJson<Telemetry>(telemJson.text);
-        Debug.Log("PARSED");
-        Debug.Log(telemJson.text);
-        
-        this.transform.position = currTelem.position.position;
-        this.transform.rotation = Quaternion.Euler(currTelem.rotation);
+        StreamReader reader = new StreamReader("Assets/Resources/rover-ui/rover-ui/comm_files/rover_telemetry.json");
+        string telemJson = reader.ReadToEnd();
+        reader.Close();
+        currTelem = JsonUtility.FromJson<Telemetry>(telemJson);
+        Debug.Log(telemJson);
+        updateNow = true;
+    }
+
+    public void UpdatePos()
+    {
+        Debug.Log("UPDATING POS");
+        Destroy(currObj);
+        Debug.Log("DESTROYED");
+        Vector3 pos = new Vector3(currTelem.position.x, currTelem.position.z, currTelem.position.y);
+        currObj = GameObject.Instantiate(telemetryObj, pos, Quaternion.Euler(currTelem.rotation));
+    }
+
+    public void EmergencyStop()
+    {
+        //Converts Target to Json and writes to rover_action.json
+        string actJson = JsonUtility.ToJson(new ActionJson(2), true);
+
+        StreamWriter outputFile = new StreamWriter("Assets/Resources/rover-ui/rover-ui/comm_files/rover_action.json");
+        outputFile.WriteLine(actJson);
+        outputFile.Close();
     }
 
 }

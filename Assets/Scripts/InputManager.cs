@@ -37,9 +37,10 @@ public class InputManager : MonoBehaviour
     private void OnChanged(object source, FileSystemEventArgs e)
     {
         Debug.Log("CHANGED");
-        tm.UpdateRover();
-        em.UnloadPrevious();
-        em.LoadEnvironment();
+        tm.UpdateJson();
+        tm.UpdatePos();
+        //em.UnloadPrevious();
+        //em.LoadEnvironment();
     }
 
     private void ReloadTarget()

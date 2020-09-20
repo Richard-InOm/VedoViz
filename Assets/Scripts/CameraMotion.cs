@@ -60,11 +60,16 @@ public class CameraMotion : MonoBehaviour
 
     public void CamToRover()
     {
-        mainCam.transform.position = tm.transform.position + new Vector3(0f, 2f, 0f);
+        mainCam.transform.position = tm.GetRoverPos() + new Vector3(0f, 2f, 0f);
     }
 
     public void ResetRotation()
     {
         mainCam.transform.rotation = Quaternion.identity;
+    }
+
+    public Vector3 GetCamEulers()
+    {
+        return mainCam.transform.localRotation.eulerAngles;
     }
 }

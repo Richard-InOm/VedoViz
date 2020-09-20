@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class UIManager : MonoBehaviour
 {
     TelemetryManager tm;
+    CameraMotion cm;
 
     private Transform batteryUI;
     private Transform velocityUI;
@@ -15,14 +16,12 @@ public class UIManager : MonoBehaviour
 
     private Vector3 rot;
 
+
     public Vector3 GetRotation()
     {
         Slider sliderX = rotationUI.GetChild(5).GetComponent<Slider>();
-        //int heldX = sliderX.gameObject.GetComponent<ButtonHold>().GetDown();
         Slider sliderY = rotationUI.GetChild(6).GetComponent<Slider>();
-        //int heldY = sliderY.gameObject.GetComponent<ButtonHold>().GetDown();
         Slider sliderZ = rotationUI.GetChild(7).GetComponent<Slider>();
-        //int heldZ = sliderZ.gameObject.GetComponent<ButtonHold>().GetDown();
         return new Vector3(sliderX.value, sliderY.value, sliderZ.value);
     }
 
@@ -30,6 +29,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         tm = FindObjectOfType<TelemetryManager>();
+        cm = FindObjectOfType<CameraMotion>();
         batteryUI = transform.GetChild(1);
         velocityUI = transform.GetChild(2);
         stateUI = transform.GetChild(3);
@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour
         UpdateBatteryUI(telem.batteryLevel);
         UpdateVelocityUI(telem.velocity);
         UpdateStateUI(telem.state);
+        UpdateRotationUI();
     }
 
     private void UpdateBatteryUI(float batteryLevel)
@@ -67,7 +68,7 @@ public class UIManager : MonoBehaviour
             myText.text = "State: Moving";
             myText.color = Color.green;
         }
-        if (state == -1) {
+        if (state == 2) {
             myText.text = "State: Error";
             myText.color = Color.red;
         }
@@ -75,6 +76,10 @@ public class UIManager : MonoBehaviour
 
     private void UpdateRotationUI()
     {
-        //DO ROT STUFF HERE
+        Vector3 rot = cm.GetCamEulers();
+        rotationUI.GetChild(9).GetComponent<Text>().text = "X: " + Mathf.Round(rot.x);
+        rotationUI.GetChild(10).GetComponent<Text>().text = "Y: " + Mathf.Round(rot.y);
+        rotationUI.GetChild(11).GetComponent<Text>().text = "Z: " + Mathf.Round(rot.z);
     }
+
 }

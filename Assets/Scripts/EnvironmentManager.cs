@@ -25,6 +25,7 @@ public class EnvironmentObj
 
     public GameObject AddToScene()
     {
+        this.position = new Vector3(this.position.x, this.position.z, this.position.y);
         GameObject envObj = GameObject.Instantiate(EnvironmentObj.possEnvObjs[this.type], this.position, Quaternion.Euler(this.rotation));
         envObj.transform.localScale = this.size;
         return envObj;
